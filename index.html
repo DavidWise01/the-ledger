@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Ledger · writing was invented to count grain — the author came 1,000 years later</title>
+<meta name="description" content="The Ledger — an AGORA teardown, render-not-invent: writing began ~3350 BCE as an anonymous accounting tool (proto-cuneiform counting grain and sheep for the temple), and stayed a nameless ledger for ~1,000 years until Enheduanna (c. 2300 BCE) attached the first 'I'. A live Bulla Breaker token-accounting simulator and a base-60 divisibility calculator. Two-layer honest. David Lee Wise / ROOT0, with AVAN.">
+<style>
+  :root{ --vellum:#f2ecdd; --vellum2:#ece3cf; --clay:#b8895a; --clay2:#8a5f36; --ink:#2c2416; --ink2:#54492f;
+    --dim:#8a7a55; --gold:#c2922e; --line:#d8c7a2; --green:#4a7a3f; --red:#b0472e; --hi:#faf4e6; }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--vellum);color:var(--ink);line-height:1.62;
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    background-image:radial-gradient(120% 80% at 106% -6%,rgba(184,137,90,.13),transparent 52%);}
+  .wrap{max-width:860px;margin:0 auto;padding:40px 22px 90px}
+  .eyebrow{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--clay2)}
+  h1{font-size:clamp(28px,5.4vw,44px);margin:.24em 0 .12em;font-weight:600}
+  h1 .c{color:var(--clay2)}
+  .sub{max-width:74ch;font-size:16.5px;color:var(--ink2)} .sub b{color:var(--ink)}
+  h2{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--clay2);margin:0 0 12px}
+  section{margin:38px 0 0;padding:22px 24px;border:1px solid var(--line);border-radius:4px;background:var(--hi)}
+  p{max-width:78ch}
+  .anchor{border-left:3px solid var(--clay);background:rgba(184,137,90,.06)}
+  .arc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+  @media(max-width:640px){.arc{grid-template-columns:1fr}}
+  .beat{border:1px solid var(--line);border-radius:4px;padding:12px 13px;background:var(--vellum)}
+  .beat .yr{font-family:ui-monospace,monospace;font-size:11px;color:var(--clay2);letter-spacing:.04em}
+  .beat b{display:block;margin:3px 0 4px;font-size:15px}
+  .beat span{font-size:13px;color:var(--ink2)}
+  /* the bulla breaker */
+  .goods{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+  .good{border:1px solid var(--line);border-radius:6px;padding:9px 12px;background:var(--vellum);cursor:pointer;font-size:13px;user-select:none;transition:.12s}
+  .good:hover{border-color:var(--clay)} .good .tok{font-size:20px;display:block;text-align:center}
+  .good .need{font-family:ui-monospace,monospace;font-size:11px;color:var(--dim)}
+  .bulla{margin-top:8px;border:2px dashed var(--clay);border-radius:50px/40px;min-height:96px;padding:14px 16px;background:rgba(184,137,90,.05);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .bulla.sealed{border-style:solid;border-radius:8px}
+  .bulla .t{font-size:22px}
+  .btnrow{margin-top:12px} button{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--clay2);background:var(--hi);border:1px solid var(--clay);border-radius:4px;padding:8px 14px;cursor:pointer;margin:0 8px 8px 0}
+  button:hover{background:var(--clay);color:#fff} button:disabled{opacity:.4;cursor:default}
+  .surface{font-family:ui-monospace,monospace;font-size:12.5px;margin-top:10px;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:var(--vellum);min-height:20px}
+  .surface .imp{color:var(--clay2)}
+  .tablet{margin-top:10px;padding:12px 14px;border:1px solid var(--clay2);border-radius:4px;background:#e8d9bd;font-family:ui-monospace,monospace;font-size:12.5px;display:none}
+  .tablet.show{display:block}
+  .b60{margin-top:8px;font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.9}
+  .b60 input{font-family:inherit;width:66px;background:var(--vellum);border:1px solid var(--line);border-radius:3px;padding:4px 6px;color:var(--ink)}
+  .b60 .ok{color:var(--green)} .b60 .no{color:var(--red)}
+  .toggle{display:inline-flex;align-items:center;gap:8px;font-family:ui-monospace,monospace;font-size:12px;color:var(--ink2);margin-top:10px;cursor:pointer}
+  .toggle .sw{width:34px;height:18px;border-radius:9px;background:var(--vellum2);border:1px solid var(--line);position:relative;transition:.15s}
+  .toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--dim);transition:.15s}
+  .toggle.on .sw{background:rgba(176,71,46,.2);border-color:var(--red)} .toggle.on .sw::after{left:18px;background:var(--red)}
+  .cap{font-size:12px;color:var(--dim);line-height:1.5;margin-top:10px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:640px){.cols{grid-template-columns:1fr}}
+  .col h3{font-size:13px;margin:0 0 7px} .col.real h3{color:var(--green)} .col.debate h3{color:var(--clay2)}
+  .col li{font-size:13px;color:var(--ink2);margin-bottom:6px;line-height:1.5}
+  a{color:var(--clay2)}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-family:ui-monospace,monospace;font-size:11px;color:var(--dim);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">UD0 · AGORA · THE MARKETPLACE · Enheduanna baseline · render-not-invent</div>
+  <h1>The <span class="c">Ledger</span> — before the author, the count</h1>
+  <p class="sub">Writing was not invented to make poems. It was invented to <b>count grain</b>. The oldest unambiguous writing on Earth — proto-cuneiform pressed into clay around <b>3350 BCE</b> — is a temple's accounting: so many sheep, so many jars of oil, so many measures of barley, for so many workers. And it stayed that way, a <b>nameless ledger</b>, for roughly a thousand years. Only around 2300 BCE does a person put a name and a first-person <i>"I"</i> to a text. That person is <b>Enheduanna</b> — and she is where AGORA begins.</p>
+
+  <section class="anchor">
+    <h2>the Enheduanna baseline</h2>
+    <p style="margin:0">Enheduanna flourished around 2300 BCE — the <i>entu</i> (high) priestess of the moon-god Nanna at Ur, and a daughter of Sargon of Akkad — and is conventionally named as the first author known by name in human history. AGORA uses her as its origin-anchor for one honest reason: she stands at the far end of the marketplace's own paper trail. The <b>record of a transaction</b> and the <b>standard it is measured against</b> (<a href="https://davidwise01.github.io/the-shekel/">the shekel-weight</a>) are both older than any named voice. Enheduanna is simply the moment the same script, the same clay, the same reed that had tallied barley for a millennium was used by a named person to say <i>"I."</i> The tie is real but deliberately unromanticised: <b>she was not an accountant and did not write on a ledger</b> — the connection is the shared medium and the true millennial gap. See <a href="https://davidwise01.github.io/enheduanna/">enheduanna</a> for the person.</p>
+  </section>
+
+  <section>
+    <h2>the idea — the tool learned to say "I"</h2>
+    <div class="arc">
+      <div class="beat"><span class="yr">~3350 BCE</span><b>the count</b><span>Proto-cuneiform in Uruk. ~85% of the earliest tablets are accounts — rations, receipts, inventories. No author. The sign pictures the thing counted.</span></div>
+      <div class="beat"><span class="yr">~2600 BCE</span><b>the sentence</b><span>Only now, ~700 years later, do hymns and proverbs appear (Fara, Abu Salabikh) — writing escapes the ledger and learns to say something other than a quantity.</span></div>
+      <div class="beat"><span class="yr">~2300 BCE</span><b>the "I"</b><span>Enheduanna signs her hymns to Inanna in the first person. The tool built to count grain, ~1,000 years on, is used by a named woman to claim her own words.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>machine · the Bulla Breaker — how counting became writing</h2>
+    <p>Before tablets, Mesopotamian clerks counted with small clay <b>tokens</b>, one shape per commodity, sealed inside a hollow clay ball — a <b>bulla</b>. To let anyone verify the contents <i>without breaking the seal</i>, they pressed each token onto the wet surface first. Once the surface said everything, the tokens inside were redundant — so they flattened the ball into a <b>tablet</b>. That flattening is the birth-of-writing step. Play the clerk:</p>
+    <p style="font-size:14px;margin-bottom:4px"><b>1 · goods arrive.</b> Click to add each to the bulla (drop its token in and impress the surface):</p>
+    <div class="goods" id="goods"></div>
+    <div class="bulla" id="bulla"><span style="color:var(--dim);font-size:13px">the bulla is empty — add goods above</span></div>
+    <div class="surface" id="surface"></div>
+    <div class="btnrow">
+      <button id="shake">🫙 shake it (guess inside)</button>
+      <button id="read">👁 read the surface</button>
+      <button id="flatten" disabled>▭ flatten into a tablet →</button>
+      <button id="reset2">↺ reset</button>
+    </div>
+    <div class="tablet" id="tablet"></div>
+    <label class="toggle" id="honTog"><span class="sw"></span>honesty: show only the <b style="margin:0 4px">plain-token → number</b> step (the accepted claim)</label>
+    <p class="cap"><b>Honest by construction.</b> This models the <i>mechanism</i> Schmandt-Besserat's thesis rests on — a step you can derive, not a dramatised event. With the honesty toggle on, only <b>plain tokens → numerical signs</b> is shown, which is broadly accepted; the further claim that <i>complex</i> tokens prefigured word-signs is disputed (Englund, Zimansky) and is what the toggle greys out.</p>
+  </section>
+
+  <section>
+    <h2>why base sixty — the divisibility the clerks chose</h2>
+    <p>The clerks counted in <b>base 60</b>, not ten — and it survives in your clock and your compass. The reason is arithmetic you can check: 60 divides evenly by far more numbers than 100, so a quantity splits cleanly among workers with no remainder. Enter a quantity and a number of shares:</p>
+    <div class="b60">
+      split <input id="qty" type="number" value="60" min="1"> among <input id="shares" type="number" value="7" min="1"> workers →
+      <span id="b60out"></span><br>
+      <span style="color:var(--dim)">60 divides evenly by: <b>1·2·3·4·5·6·10·12·15·20·30·60</b> (12 ways) &nbsp;·&nbsp; 100 divides by: <b>1·2·4·5·10·20·25·50·100</b> (9 ways)</span>
+    </div>
+    <p class="cap">Real arithmetic, computed live. Honest caveat: proto-cuneiform was not uniformly base-60 — it used ~13 context-dependent metrologies (grain, area, herds each had their own scale); sexagesimal is the base for <i>discrete counting</i>, not one universal system.</p>
+  </section>
+
+  <section>
+    <h2>the reckoning — what's settled, what's still argued</h2>
+    <div class="cols">
+      <div class="col real"><h3>✓ SETTLED</h3>
+        <ul style="padding-left:18px;margin:0">
+          <li>The oldest writing (Uruk IV, ~3350–3200 BCE) is accounting — ~85% administrative, picturing the goods counted.</li>
+          <li>Clay tokens in sealed bullae were a real pre-writing counting device across the Near East.</li>
+          <li>Literature appears ~2600 BCE — ~700 years after the ledger; named authorship (Enheduanna) ~1,000 years after.</li>
+          <li>Base-60 underlies discrete counting and survives in time and angle.</li>
+        </ul>
+      </div>
+      <div class="col debate"><h3>⚑ STILL CONTESTED</h3>
+        <ul style="padding-left:18px;margin:0">
+          <li><b>The token thesis' edges:</b> plain-token → number is accepted; complex-token → word-sign is disputed (Englund, Zimansky, Damerow).</li>
+          <li><b>"Base-60 accounting"</b> oversimplifies — ~13 metrologies, not one uniform system.</li>
+          <li><b>Enheduanna's authorship:</b> every surviving manuscript is Old Babylonian (~18th–17th c. BCE), ~500–600 years after her; some read "Enheduanna" as the office, not the person. "First named author" is the traditional claim, not settled.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="cap" style="margin-top:12px"><b>Render-not-invent.</b> The Bulla Breaker and the base-60 calculator are real mechanisms computed in your browser, not a dramatised reconstruction. Sources: CDLI (proto-cuneiform dating), Schmandt-Besserat and her critics (the token thesis), standard Assyriology on Enheduanna. Where it belongs: <a href="https://davidwise01.github.io/the-shekel/">the-shekel</a> (the standard of value) · <a href="https://davidwise01.github.io/money/">money</a> · <a href="https://davidwise01.github.io/the-market/">the-market</a>.</p>
+    <p class="cap" style="margin-top:8px"><b>AVAN's inverse companion:</b> <a href="https://davidwise01.github.io/yohaku/">余白 · Yohaku</a> — the ledger is a perfect record of what someone thought worth counting, and silent about all the rest; the margin it leaves blank is the larger inventory.</p>
+  </section>
+
+  <footer>
+    AGORA · the marketplace · UD0 · David Lee Wise (ROOT0) with AVAN · Enheduanna baseline · render-not-invent, two-layer honest · CC-BY-ND-4.0
+  </footer>
+</div>
+<script>
+"use strict";
+var GOODS=[{n:"sheep",t:"🐑",max:9},{n:"oil-jars",t:"🫙",max:5},{n:"grain",t:"🌾",max:9}];
+var counts={}, sealed=false, honesty=false;
+GOODS.forEach(function(g){counts[g.n]=0;});
+var goodsEl=document.getElementById("goods");
+function renderGoods(){
+  goodsEl.innerHTML="";
+  GOODS.forEach(function(g){
+    var d=document.createElement("div"); d.className="good";
+    d.innerHTML='<span class="tok">'+g.t+'</span>'+g.n+' <span class="need">('+counts[g.n]+')</span>';
+    d.onclick=function(){ if(sealed)return; if(counts[g.n]<g.max)counts[g.n]++; render(); };
+    goodsEl.appendChild(d);
+  });
+}
+var bulla=document.getElementById("bulla"), surface=document.getElementById("surface");
+function total(){ return GOODS.reduce(function(a,g){return a+counts[g.n];},0); }
+function render(){
+  renderGoods();
+  if(total()===0){ bulla.innerHTML='<span style="color:var(--dim);font-size:13px">the bulla is empty — add goods above</span>'; }
+  else {
+    var h="";
+    GOODS.forEach(function(g){ for(var i=0;i<counts[g.n];i++) h+='<span class="t">'+g.t+'</span>'; });
+    bulla.innerHTML=h;
+  }
+  surface.innerHTML="";
+  document.getElementById("flatten").disabled = total()===0;
+}
+document.getElementById("shake").onclick=function(){
+  if(total()===0)return;
+  surface.innerHTML='🫱 <span style="color:var(--red)">you shake it and hear tokens rattle — but to know the exact count you must BREAK the seal (and then it proves nothing).</span>';
+};
+document.getElementById("read").onclick=function(){
+  if(total()===0)return;
+  var parts=GOODS.filter(function(g){return counts[g.n]>0;}).map(function(g){
+    return '<span class="imp">'+g.t.repeat(counts[g.n])+'</span> = '+counts[g.n]+' '+g.n; });
+  surface.innerHTML='👁 the impressed surface reads: '+parts.join(' · ')+' — <b>verified without breaking the seal.</b>';
+};
+document.getElementById("flatten").onclick=function(){
+  if(total()===0)return;
+  bulla.classList.add("sealed");
+  var t=document.getElementById("tablet"); t.classList.add("show");
+  var rows=GOODS.filter(function(g){return counts[g.n]>0;}).map(function(g){
+    return '│ '+String(counts[g.n]).padStart(2)+' × '+g.t+'  '+g.n; });
+  t.innerHTML='▭ <b>the tablet</b> — the tokens are now redundant; the surface IS the record:<br><br>'+rows.join('<br>')+
+    (honesty? '' : '<br><br><span style="color:var(--dim)">and, in the fuller (contested) thesis, these pictures drift toward word-signs — writing proper.</span>');
+};
+document.getElementById("reset2").onclick=function(){ GOODS.forEach(function(g){counts[g.n]=0;}); sealed=false;
+  bulla.classList.remove("sealed"); document.getElementById("tablet").classList.remove("show"); render(); };
+document.getElementById("honTog").onclick=function(){ honesty=!honesty; this.classList.toggle("on",honesty); };
+render();
+
+// base-60 divisibility
+function divisors(n){ var c=0; for(var i=1;i<=n;i++) if(n%i===0)c++; return c; }
+function updB60(){
+  var q=Math.max(1,+document.getElementById("qty").value||1), s=Math.max(1,+document.getElementById("shares").value||1);
+  var per=q/s, clean=q%s===0;
+  document.getElementById("b60out").innerHTML = clean
+    ? '<span class="ok">'+per+' each, no remainder ✓</span>'
+    : '<span class="no">'+Math.floor(per)+' each, remainder '+(q%s)+' — does not split cleanly</span>';
+}
+document.getElementById("qty").oninput=updB60; document.getElementById("shares").oninput=updB60; updB60();
+</script>
+</body>
+</html>
