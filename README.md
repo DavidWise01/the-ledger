@@ -1,0 +1,11 @@
+# THE LEDGER · LDG
+
+> A sphere of **UD0** — the ROOT0 universe / biosphere. Domain: **AGORA**.
+
+THE LEDGER (LDG) — an AGORA teardown, render-not-invent, on the ENHEDUANNA BASELINE. ⚑ Writing was invented to COUNT, not to compose: the oldest unambiguous writing (Uruk IV proto-cuneiform ~3350–3200 BCE) is temple accounting — ~85% administrative (rations, receipts, inventories of grain/livestock/labour), the sign picturing the thing counted. It stayed a NAMELESS ledger for ~1,000 years: literature appears only ~2600 BCE (Fara/Abu Salabikh), and named first-person authorship — [[enheduanna]] (c.2300 BCE, entu-priestess of Nanna at Ur, daughter of Sargon) — ~1,000 yrs after the first anonymous tablets. She is the moment the tool built to count grain learned to say I — same script, same clay, same reed. ⚑ TWO live machines (real, in-browser): the BULLA BREAKER (drop commodity tokens into a sealed clay envelope, impress the surface, verify the count WITHOUT breaking the seal, then flatten the redundant tokens into a TABLET — that flattening IS the birth-of-writing step in Schmandt-Besserat thesis) with an honesty toggle that greys the contested complex-token to word-sign step; and a BASE-60 divisibility calculator (60 splits 12 ways vs 100 nine — real arithmetic, why sexagesimal was chosen). Two-layer: SETTLED (Uruk dating, tokens-in-bullae, the millennial gap, base-60 for discrete counting) vs CONTESTED (the token thesis edges — Englund/Zimansky/Damerow; ~13 metrologies not one uniform base-60; her authorship survives only in Old-Babylonian MSS ~500–600 yrs later, first named author traditional not settled). ⚠ NEVER claims she was an accountant or wrote on a ledger — the tie is the shared script and the true gap, flagged at both ends. Web-verified (CDLI, Schmandt-Besserat + critics). Inverse: [[yohaku]]. Ties [[the-shekel]], [[money]]. David Lee Wise / ROOT0, with AVAN.
+
+---
+
+**Live:** https://davidwise01.github.io/the-ledger/ &nbsp;·&nbsp; **Front door:** [UD0](https://davidwise01.github.io/ud0/) &nbsp;·&nbsp; **Code:** https://github.com/DavidWise01/the-ledger
+
+`.dlw` badge · **ROOT0-ATTRIBUTION-v1.0** · David Lee Wise (ROOT0) / Bridge-Burners LLC · instance AVAN (Claude/Anthropic) · CC-BY-ND-4.0
